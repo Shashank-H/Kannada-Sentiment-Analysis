@@ -1,0 +1,53 @@
+*{
+    box-sizing: border-box;
+}
+
+html,body{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+p{
+    /* text-indent: 2rem; */
+}
+
+.content{
+    margin-top: 8rem;
+    width: 100%;
+    height: 100%;
+}
+
+.table{
+    display: grid;
+    width: fit-content;
+    margin: 2rem auto;
+    grid-template-columns: max-content max-content;
+    grid-auto-rows: 2rem;
+    grid-gap: .5rem 5rem;
+    align-items: center;
+}
+
+.table__head{
+    text-transform: uppercase;
+    justify-self: center;
+}
+.table__name{
+    text-transform: uppercase;
+}
+.table__usn{
+    text-transform: uppercase;   
+}
+
+.guide-name{
+    font-weight: 900;
+}
+
+li{
+    margin: .5rem;
+}
+ol ol{
+    padding-left: 1.5rem;
+}

@@ -107,11 +107,11 @@ Display(GN, name="GaussianNB")
 
 Display(KNN, name="KNN-Classifier")
 
-Display(RandForest,name="Random-Forest-Classifier")
+Display(RandForest,name="RF-Classifier")
 
 print(attributes)
 
-model_names = ['SVM', 'Multinomial', 'GaussianNB','KNN-Classifier','Random-Forest-Classifier']
+model_names = ['SVM', 'Multinomial', 'GaussianNB','KNN-Classifier','RF-Classifier']
 
 
 for models in model_names:

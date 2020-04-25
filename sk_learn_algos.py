@@ -136,7 +136,7 @@ Plot(test_time_plot, label="Test-Time")
 ranges=[0,50,100,150,200]
 plt.xlabel('Algorithms')
 plt.ylabel('Value')
-plt.xticks(ranges,['SVM','Multinomial','GaussianNB','KNN-Classifier','Random-Forest-Classifier'])
+plt.xticks(ranges,['SVM','Multinomial','GaussianNB','KNN-Classifier','RF-Classifier'])
 
 plt.scatter(ranges, accuracy_plot, color='g',label="Accuracy")
 plt.scatter(ranges, recall_plot, color='orange',label="Recall")

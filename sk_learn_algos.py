@@ -91,6 +91,7 @@ def Plot(performance_arg, label):
     plt.ylabel(label)
     plt.title('Algorithm '+label+' Comparision')
     plt.savefig("outputs/graphs/"+label.lower()+".png")
+    plt.close()
 
 
 NB = MultinomialNB()

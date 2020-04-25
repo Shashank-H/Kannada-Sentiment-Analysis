@@ -5,6 +5,7 @@ from sklearn.svm import LinearSVC
 from sklearn.naive_bayes import MultinomialNB, GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import confusion_matrix
+import time
 import string
 import numpy as np
 import matplotlib.pyplot as plt
@@ -14,6 +15,8 @@ accuracy_plot = []
 recall_plot = []
 f1_plot = []
 precision_plot = []
+train_time_plot = []
+test_time_plot = []
 
 corpus = pd.read_excel("data/dataset.xlsx")
 print('Kannada Corpus : ', len(corpus))
@@ -42,8 +45,14 @@ attributes = {}
 
 
 def Display(model, name):
+    trainS  = time.time()
     model.fit(X_train_dtm, y_train)
+    trainE = time.time()
+
+    testS  = time.time()
     y_predicted = model.predict(X_test_dtm.toarray())
+    testE = time.time()
+
     conf_matrix = confusion_matrix(y_test, y_predicted)
 
     tp_nb = conf_matrix[1, 1]
@@ -51,6 +60,7 @@ def Display(model, name):
     fp_nb = conf_matrix[1, 0]
     fn_nb = conf_matrix[0, 1]
 
+    print(name)
     accuracy = (tp_nb + tn_nb) / (tp_nb + tn_nb + fp_nb + fn_nb)
     print('Accuracy ', accuracy)
     precision = tp_nb / (tp_nb + fp_nb)
@@ -59,12 +69,16 @@ def Display(model, name):
     print('Recall ', recall)
     f1_score = 2 * precision * recall / (precision + recall)
     print('F1_Score', f1_score)
+    print('Training_Time',trainE-trainS)
+    print('Testing_Time',testE-testS)
     print("\n")
     attributes[name] = {
         'accuracy': accuracy,
         'precision': precision,
         'recall': recall,
-        'f1score': f1_score
+        'f1score': f1_score,
+        'train_time': trainE-trainS,
+        'test_time': testE-testS
     }
 
 
@@ -75,8 +89,7 @@ def Plot(performance_arg, label):
     plt.xticks(y_pos, objects)
     plt.ylabel(label)
     plt.title('Algorithm '+label+' Comparision')
-    plt.savefig("outputs/graphs/"+label+".png");
-    plt.show()
+    plt.savefig("outputs/graphs/"+label.lower()+".png")
 
 
 NB = MultinomialNB()
@@ -102,17 +115,21 @@ for models in model_names:
     recall_plot.append(round(attributes[models]['recall'] * 100, 2))
     f1_plot.append(round(attributes[models]['f1score'] * 100, 2))
     precision_plot.append(round(attributes[models]['precision'] * 100, 2))
+    train_time_plot.append(round(attributes[models]['train_time']*100,3))
+    test_time_plot.append(round(attributes[models]['test_time']*100,3))
+
 
 
 Plot(accuracy_plot, label="Accuracy")
 Plot(recall_plot, label="Recall")
 Plot(f1_plot, label="F1-Score")
 Plot(precision_plot, label="Precision")
+Plot(train_time_plot, label="Train-Time")
+Plot(test_time_plot, label="Test-Time")
 
 
-
-#LinePlot of all algorithms
-ranges =[0,50,100,150]
+#Line Plot Of All Algorithms Combined
+ranges=[0,50,100,150]
 plt.xlabel('Algorithms')
 plt.ylabel('Value')
 plt.xticks(ranges,['SVM','Multinomial','GaussianNB','KNN-Classifier'])
@@ -121,6 +138,8 @@ plt.scatter(ranges, accuracy_plot, color='g',label="Accuracy")
 plt.scatter(ranges, recall_plot, color='orange',label="Recall")
 plt.scatter(ranges, f1_plot, color='blue',label="f1_score")
 plt.scatter(ranges, precision_plot, color='red',label="Precision")
+# plt.scatter(ranges, train_time_plot, color='cyan',label="Train")
+# plt.scatter(ranges, test_time_plot, color='black',label="Test")
 
 plt.legend()
 plt.title('Line plot')
@@ -129,6 +148,7 @@ plt.plot(ranges, accuracy_plot, color='g',label="Accuracy")
 plt.plot(ranges, recall_plot, color='orange',label="Recall")
 plt.plot(ranges, f1_plot, color='blue',label="f1_score")
 plt.plot(ranges, precision_plot, color='red',label="Precision")
+# plt.plot(ranges, train_time_plot, color='cyan',label="Train")
+# plt.plot(ranges, test_time_plot, color='black',label="Test")
 
 plt.savefig("outputs/graphs/line-plot.png")
-plt.show()

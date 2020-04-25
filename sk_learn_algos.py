@@ -4,6 +4,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.svm import LinearSVC
 from sklearn.naive_bayes import MultinomialNB, GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import confusion_matrix
 import time
 import string
@@ -83,7 +84,7 @@ def Display(model, name):
 
 
 def Plot(performance_arg, label):
-    objects = ('SVM', 'Multinomial', 'GaussianNB','KNN-Classifier')
+    objects = ('SVM', 'Multinomial', 'GaussianNB','KNN-Classifier','RF-Classifier')
     y_pos = np.arange(len(objects))
     plt.bar(y_pos, performance_arg, align='center', alpha=1, color='r')
     plt.xticks(y_pos, objects)
@@ -96,6 +97,7 @@ NB = MultinomialNB()
 SVM = LinearSVC()
 GN = GaussianNB()
 KNN = KNeighborsClassifier()
+RandForest= RandomForestClassifier()
 
 Display(SVM, name="SVM")
 
@@ -105,9 +107,11 @@ Display(GN, name="GaussianNB")
 
 Display(KNN, name="KNN-Classifier")
 
+Display(RandForest,name="Random-Forest-Classifier")
+
 print(attributes)
 
-model_names = ['SVM', 'Multinomial', 'GaussianNB','KNN-Classifier']
+model_names = ['SVM', 'Multinomial', 'GaussianNB','KNN-Classifier','Random-Forest-Classifier']
 
 
 for models in model_names:
@@ -129,10 +133,10 @@ Plot(test_time_plot, label="Test-Time")
 
 
 #Line Plot Of All Algorithms Combined
-ranges=[0,50,100,150]
+ranges=[0,50,100,150,200]
 plt.xlabel('Algorithms')
 plt.ylabel('Value')
-plt.xticks(ranges,['SVM','Multinomial','GaussianNB','KNN-Classifier'])
+plt.xticks(ranges,['SVM','Multinomial','GaussianNB','KNN-Classifier','Random-Forest-Classifier'])
 
 plt.scatter(ranges, accuracy_plot, color='g',label="Accuracy")
 plt.scatter(ranges, recall_plot, color='orange',label="Recall")

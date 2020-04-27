@@ -83,10 +83,10 @@ def Display(model, name):
     }
 
 
-def Plot(performance_arg, label):
+def Plot(performance_arg, label,color):
     objects = ('SVM', 'Multinomial', 'GaussianNB','KNN-Classifier','RF-Classifier')
     y_pos = np.arange(len(objects))
-    plt.bar(y_pos, performance_arg, align='center', alpha=1, color='r')
+    plt.bar(y_pos, performance_arg, align='center', alpha=1, color=color)
     plt.xticks(y_pos, objects)
     plt.ylabel(label)
     plt.title('Algorithm '+label+' Comparision')
@@ -120,40 +120,41 @@ for models in model_names:
     recall_plot.append(round(attributes[models]['recall'] * 100, 2))
     f1_plot.append(round(attributes[models]['f1score'] * 100, 2))
     precision_plot.append(round(attributes[models]['precision'] * 100, 2))
-    train_time_plot.append(round(attributes[models]['train_time']*100,3))
-    test_time_plot.append(round(attributes[models]['test_time']*100,3))
+    train_time_plot.append(round(attributes[models]['train_time']*10,3))
+    test_time_plot.append(round(attributes[models]['test_time']*10,3))
 
 
 
-Plot(accuracy_plot, label="Accuracy")
-Plot(recall_plot, label="Recall")
-Plot(f1_plot, label="F1-Score")
-Plot(precision_plot, label="Precision")
-Plot(train_time_plot, label="Train-Time")
-Plot(test_time_plot, label="Test-Time")
+Plot(accuracy_plot, label="Accuracy", color='green')
+Plot(recall_plot, label="Recall", color='orange')
+Plot(f1_plot, label="F1-Score", color='blue')
+Plot(precision_plot, label="Precision", color='red')
+Plot(train_time_plot, label="Train-Time", color='cyan')
+Plot(test_time_plot, label="Test-Time", color='brown')
 
 
 #Line Plot Of All Algorithms Combined
 ranges=[0,50,100,150,200]
+plt.figure(figsize=(10,7.5))
 plt.xlabel('Algorithms')
 plt.ylabel('Value')
-plt.xticks(ranges,['SVM','Multinomial','GaussianNB','KNN-Classifier','RF-Classifier'])
+plt.xticks(ranges,labels=['SVM','Multinomial','GaussianNB','KNN-Classifier','RF-Classifier'])
 
 plt.scatter(ranges, accuracy_plot, color='g',label="Accuracy")
 plt.scatter(ranges, recall_plot, color='orange',label="Recall")
 plt.scatter(ranges, f1_plot, color='blue',label="f1_score")
 plt.scatter(ranges, precision_plot, color='red',label="Precision")
-# plt.scatter(ranges, train_time_plot, color='cyan',label="Train")
-# plt.scatter(ranges, test_time_plot, color='black',label="Test")
+plt.scatter(ranges, train_time_plot, color='cyan',label="Train")
+plt.scatter(ranges, test_time_plot, color='brown',label="Test")
 
-plt.legend()
+plt.legend(loc=0)
 plt.title('Line plot')
 
 plt.plot(ranges, accuracy_plot, color='g',label="Accuracy")
 plt.plot(ranges, recall_plot, color='orange',label="Recall")
 plt.plot(ranges, f1_plot, color='blue',label="f1_score")
 plt.plot(ranges, precision_plot, color='red',label="Precision")
-# plt.plot(ranges, train_time_plot, color='cyan',label="Train")
-# plt.plot(ranges, test_time_plot, color='black',label="Test")
+plt.plot(ranges, train_time_plot, color='cyan',label="Train")
+plt.plot(ranges, test_time_plot, color='brown',label="Test")
 
 plt.savefig("outputs/graphs/line-plot.png")
